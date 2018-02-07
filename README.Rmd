@@ -49,6 +49,15 @@ for(i in 1:length(dn)){
   all.MIC <- rbind(all.MIC, stats)
 }
 
-print(all.MIC)
+all.MIC %>% mutate_if(is.numeric, function(x) round(x, digits=3))
+```
+
+### Plot MICs
+```{r viewMICs, cache=TRUE}
+ggplot(all.MIC, aes(x=dataset, y = MIC)) +
+  geom_bar(stat = "identity") +
+  xlab("") +
+  coord_flip()
+
 ```
 
