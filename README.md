@@ -20,11 +20,7 @@ Evalutating MIC to the Datasaurus Dozen data set using minerva package in R.
 
 ```r
 require(minerva)
-#> Warning: package 'minerva' was built under R version 3.4.3
 require(tidyverse)
-#> Warning: package 'tidyverse' was built under R version 3.4.3
-#> Warning: package 'tibble' was built under R version 3.4.3
-#> Warning: package 'dplyr' was built under R version 3.4.2
 require(magrittr)
 
 dists.df <- read.delim(file = "src/DatasaurusDozen.tsv", sep = "\t", header = TRUE)
@@ -82,4 +78,4 @@ print(all.MIC)
 #> 13 3.212838
 ```
 
-# TheDatasaurusDozen
+

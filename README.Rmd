@@ -1,0 +1,54 @@
+---
+title: "Application minerva to The Datasaurus Dozen data set"
+author: Satoshi Kato (@katokohaku)
+output: 
+  html_document:
+    keep_md: yes
+  md_document:
+    variant: markdown_github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE
+)
+library(mvtnorm)
+```
+
+## Overview
+
+Evalutating MIC to the Datasaurus Dozen data set using minerva package in R.
+**Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing". [ACM SIGCHI Conference on Human Factors in Computing Systems](https://www.autodeskresearch.com/publications/samestats)**
+
+## Examples
+### Data preparation
+```{r dataPrep, cache=TRUE}
+require(minerva)
+require(tidyverse)
+require(magrittr)
+
+dists.df <- read.delim(file = "src/DatasaurusDozen.tsv", sep = "\t", header = TRUE)
+```
+### View
+```{r learnModel, cache=TRUE}
+dn <- unique((dists.df$dataset))
+for(i in 1:length(dn)){
+  dists.df %>% filter(dataset==dn[i]) %$% plot(x=x, y=y, main=dn[i])
+}
+```
+
+### See MICs
+```{r predict, cache=TRUE}
+all.MIC <- NULL
+for(i in 1:length(dn)){
+  ds <- dn[i]
+  dd <- dists.df %>% filter(dataset==ds) 
+  stats <- cbind(dataset=ds, mine(x = dd$x, y = dd$y) %>% data.frame)
+  all.MIC <- rbind(all.MIC, stats)
+}
+
+print(all.MIC)
+```
+
